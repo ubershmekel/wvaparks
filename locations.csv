@@ -1,4 +1,4 @@
-Name,Address,Wheelchair,Display_wd,Coordinates,Audio
-Stone Creek Swim Club,Close by,YES,1.5,"33.690426, -117.798669",
-Fallbrook Park,Somewhere,NO,1.5,"33.679664, -117.782787",YES
-Ashwood Park,Elsewhere,YES,1.5,"33.680196, -117.786991",
+Name,Address,Coordinates,Wheelchair,Audio
+Stone Creek Swim Club,Close by,"33.690426, -117.798669",YES,
+Fallbrook Park,Somewhere,"33.679664, -117.782787",,YES
+Ashwood Park,Elsewhere,"33.680196, -117.786991",YES,

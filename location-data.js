@@ -2,13 +2,9 @@
  * @extends storeLocator.StaticDataFeed
  * @constructor
  */
-function LocationData() {
+function LocationData(getData) {
   $.extend(this, new storeLocator.StaticDataFeed);
-
-  var that = this;
-  $.get('locations.csv', function(data) {
-    that.setStores(that.parse_(data));
-  });
+  this.setStores(this.parse_(getData));
 }
 
 /**
@@ -16,15 +12,7 @@ function LocationData() {
  * @type {!storeLocator.FeatureSet}
  * @private
  */
-LocationData.prototype.FEATURES_ = new storeLocator.FeatureSet(
-  new storeLocator.Feature('Wheelchair-YES', 'Wheelchair access'),
-  new storeLocator.Feature('Audio-YES', 'Audio'),
-  new storeLocator.Feature('Whatever', 'Testing'),
-  new storeLocator.Feature('Whatever', 'Testing'),
-  new storeLocator.Feature('Whatever', 'Testing'),
-  new storeLocator.Feature('Whatever', 'Testing'),
-  new storeLocator.Feature('Whatever', 'Testing')
-);
+LocationData.prototype.FEATURES_ = null;
 
 /**
  * @return {!storeLocator.FeatureSet}
@@ -32,6 +20,16 @@ LocationData.prototype.FEATURES_ = new storeLocator.FeatureSet(
 LocationData.prototype.getFeatures = function() {
   return this.FEATURES_;
 };
+
+LocationData.prototype.setFeatures = function(featureNames) {
+  var newFeatures = new storeLocator.FeatureSet();
+  for(var i = 0; i < featureNames.length; i++) {
+    var columnName = featureNames[i];
+    var feature = new storeLocator.Feature(columnName, columnName);
+    newFeatures.add(feature);
+  }
+  this.FEATURES_ = newFeatures;
+}
 
 /**
  * @private
@@ -43,11 +41,19 @@ LocationData.prototype.parse_ = function(csv) {
   var parseResults = Papa.parse(csv, {header: true});
   var allRows = parseResults.data;
 
+  var headers = parseResults.meta.fields;
+  var featureNames = headers.slice(3); // 3 = name, address, coord
+  this.setFeatures(featureNames);
+
   for (var i = 0; i < allRows.length; i++) {
     var row = allRows[i];
     var features = new storeLocator.FeatureSet();
-    features.add(this.FEATURES_.getById('Wheelchair-' + row.Wheelchair));
-    features.add(this.FEATURES_.getById('Audio-' + row.Audio));
+    for(var j = 0; j < featureNames.length; j++) {
+      var featName = featureNames[j];
+      var value = $.trim(row[featName]);
+      if(value)
+        features.add(this.FEATURES_.getById(featName));
+    }
 
     if(!row.Coordinates) {
       console.warn("Failed to parse coordinates: row #" + i + " : " + row);

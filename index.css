@@ -99,3 +99,18 @@
   color: green;
   margin-right: 0.5em;
 }
+
+
+body { font-family: sans-serif; }
+#map-canvas, #panel { height: 800px; }
+#panel {
+  width: 300px; float: left; margin-right: 10px;
+}
+#panel .feature-filter label {
+  width: 130px;
+}
+#panel .feature-filter label:hover {
+  background: #eee;
+}
+
+p.attribution, p.attribution a { color: #666; }

@@ -7,15 +7,15 @@ google.maps.event.addDomListener(window, 'load', function() {
   });
 
   var panelDiv = document.getElementById('panel');
+  $.get('locations.csv', function(data) {
+    var locData = new LocationData(data);
+    var view = new storeLocator.View(map, locData, {
+      geolocation: false,
+      features: locData.getFeatures()
+    });
 
-  var data = new LocationData;
-
-  var view = new storeLocator.View(map, data, {
-    geolocation: false,
-    features: data.getFeatures()
-  });
-
-  new storeLocator.Panel(panelDiv, {
-    view: view
+    new storeLocator.Panel(panelDiv, {
+      view: view
+    });
   });
 });
