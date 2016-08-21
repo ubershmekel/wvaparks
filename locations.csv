@@ -1,0 +1,4 @@
+Fcilty_typ,State,Fcilty_nam,Shp_num_an,Shp_centre,Street_add,Locality,Postcode,Hrs_of_bus,Wheelchair,Display_wd,Fcilty_typ_2,Xcoord,Ycoord,uuid,result,Audio
+MO,NSW,Queanbeyan,Shop 47,Riverside Plaza,131 Monaro Street,Queanbeyan,2620,"09:00-17:00 Monday to Friday, excluding Public Holidays",YES,1.5,http://www.medicareaustralia.gov.au/public/claims/offices.jsp,149.23532,-35.352484,67,999,
+MO,NSW,Bathurst,Shop 25,Bathurst Chase,39 William Street,Bathurst,2795,"09:00-17:00 Monday to Friday, excluding Public Holidays",NO,1.5,http://www.medicareaustralia.gov.au/public/claims/offices.jsp,149.583193,-33.41619,10,10,
+MO,NSW,Mudgee,Shop 6,The Mortimer Centre,90-96 Mortimer Street,Mudgee,2850,"09:00-16:30  Monday to Friday, excluding Public Holidays",YES,1.5,http://www.medicareaustralia.gov.au/public/claims/offices.jsp,149.586121,-32.592757,53,100000,

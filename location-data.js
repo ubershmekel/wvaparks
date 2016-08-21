@@ -2,11 +2,11 @@
  * @extends storeLocator.StaticDataFeed
  * @constructor
  */
-function MedicareDataSource() {
+function LocationData() {
   $.extend(this, new storeLocator.StaticDataFeed);
 
   var that = this;
-  $.get('medicare.csv', function(data) {
+  $.get('locations.csv', function(data) {
     that.setStores(that.parse_(data));
   });
 }
@@ -16,7 +16,7 @@ function MedicareDataSource() {
  * @type {!storeLocator.FeatureSet}
  * @private
  */
-MedicareDataSource.prototype.FEATURES_ = new storeLocator.FeatureSet(
+LocationData.prototype.FEATURES_ = new storeLocator.FeatureSet(
   new storeLocator.Feature('Wheelchair-YES', 'Wheelchair access'),
   new storeLocator.Feature('Audio-YES', 'Audio')
 );
@@ -24,7 +24,7 @@ MedicareDataSource.prototype.FEATURES_ = new storeLocator.FeatureSet(
 /**
  * @return {!storeLocator.FeatureSet}
  */
-MedicareDataSource.prototype.getFeatures = function() {
+LocationData.prototype.getFeatures = function() {
   return this.FEATURES_;
 };
 
@@ -33,13 +33,13 @@ MedicareDataSource.prototype.getFeatures = function() {
  * @param {string} csv
  * @return {!Array.<!storeLocator.Store>}
  */
-MedicareDataSource.prototype.parse_ = function(csv) {
+LocationData.prototype.parse_ = function(csv) {
   var stores = [];
-  var rows = csv.split('\n');
-  var headings = this.parseRow_(rows[0]);
+  var parseResults = Papa.parse(csv, {header: true});
+  var allRows = parseResults.data;
 
-  for (var i = 1, row; row = rows[i]; i++) {
-    row = this.toObject_(headings, this.parseRow_(row));
+  for (var i = 0; i < allRows.length; i++) {
+    var row = allRows[i];
     var features = new storeLocator.FeatureSet;
     features.add(this.FEATURES_.getById('Wheelchair-' + row.Wheelchair));
     features.add(this.FEATURES_.getById('Audio-' + row.Audio));
@@ -66,7 +66,7 @@ MedicareDataSource.prototype.parse_ = function(csv) {
  * @param {string} sep the separator.
  * @return {string}
  */
-MedicareDataSource.prototype.join_ = function(arr, sep) {
+LocationData.prototype.join_ = function(arr, sep) {
   var parts = [];
   for (var i = 0, ii = arr.length; i < ii; i++) {
     arr[i] && parts.push(arr[i]);
@@ -81,7 +81,7 @@ MedicareDataSource.prototype.join_ = function(arr, sep) {
  * @param {string} row
  * @return {Array.<string>}
  */
-MedicareDataSource.prototype.parseRow_ = function(row) {
+LocationData.prototype.parseRow_ = function(row) {
   // Strip leading quote.
   if (row.charAt(0) == '"') {
     row = row.substring(1);
@@ -104,7 +104,7 @@ MedicareDataSource.prototype.parseRow_ = function(row) {
  * @param {Array.<string>} row
  * @return {Object}
  */
-MedicareDataSource.prototype.toObject_ = function(headings, row) {
+LocationData.prototype.toObject_ = function(headings, row) {
   var result = {};
   for (var i = 0, ii = row.length; i < ii; i++) {
     result[headings[i]] = row[i];
