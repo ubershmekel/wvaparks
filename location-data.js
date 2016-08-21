@@ -18,7 +18,12 @@ function LocationData() {
  */
 LocationData.prototype.FEATURES_ = new storeLocator.FeatureSet(
   new storeLocator.Feature('Wheelchair-YES', 'Wheelchair access'),
-  new storeLocator.Feature('Audio-YES', 'Audio')
+  new storeLocator.Feature('Audio-YES', 'Audio'),
+  new storeLocator.Feature('Whatever', 'Testing'),
+  new storeLocator.Feature('Whatever', 'Testing'),
+  new storeLocator.Feature('Whatever', 'Testing'),
+  new storeLocator.Feature('Whatever', 'Testing'),
+  new storeLocator.Feature('Whatever', 'Testing')
 );
 
 /**
@@ -40,19 +45,22 @@ LocationData.prototype.parse_ = function(csv) {
 
   for (var i = 0; i < allRows.length; i++) {
     var row = allRows[i];
-    var features = new storeLocator.FeatureSet;
+    var features = new storeLocator.FeatureSet();
     features.add(this.FEATURES_.getById('Wheelchair-' + row.Wheelchair));
     features.add(this.FEATURES_.getById('Audio-' + row.Audio));
 
-    var position = new google.maps.LatLng(row.Ycoord, row.Xcoord);
+    if(!row.Coordinates) {
+      console.warn("Failed to parse coordinates: row #" + i + " : " + row);
+      continue;
+    }
+    var coords = row.Coordinates.split(",");
+    var xcoord = +coords[0];
+    var ycoord = +coords[1];
+    var position = new google.maps.LatLng(xcoord, ycoord);
 
-    var shop = this.join_([row.Shp_num_an, row.Shp_centre], ', ');
-    var locality = this.join_([row.Locality, row.Postcode], ', ');
-
-    var store = new storeLocator.Store(row.uuid, position, features, {
-      title: row.Fcilty_nam,
-      address: this.join_([shop, row.Street_add, locality], '<br>'),
-      hours: row.Hrs_of_bus
+    var store = new storeLocator.Store(i, position, features, {
+      title: row.Name,
+      address: row.Address,
     });
     stores.push(store);
   }
