@@ -1,4 +1,8 @@
-Name,Address,Coordinates,Wheelchair,Audio
-Stone Creek Swim Club,Close by,"33.690426, -117.798669",YES,
-Fallbrook Park,Somewhere,"33.679664, -117.782787",,YES
-Ashwood Park,Elsewhere,"33.680196, -117.786991",YES,
+Name,Address,Coordinates,Pool-Wader,Pool-Spa,Pool-Swimming,Splash Pad,Playground,Basketball Court,Volleyball Court,Tennis Court,Rentable
+Stone Creek Swim Club,Stonecreek N/Redhawk,"33.690426, -117.798669",1,1,1,,,,,1,
+Fallbrook Park,Fallbrook/Autumn Oak,"33.679664, -117.782787",1,1,1,1,1,,,,1
+Ashwood Park,Ashwood/Woodspring,"33.680196, -117.786991",1,1,1,,1,1,1,,1
+Crestbrook Park,Eastshore/Hawkridge,"33.677047, -117.787490",,,,,,,,,
+Firwood Park,Eastshore/Woodspring,"33.678429, -117.791266",1,,1,,,,,,1
+Arbor Park,Stonecreek N/Creekwood,"33.684525, -117.797734",,,,,,,,,1
+Arrowhead Park,Stonecreek N/Nighthawk,"33.686952, -117.798781",,,,,1,1,1,,
